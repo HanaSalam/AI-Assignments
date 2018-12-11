@@ -1,30 +1,35 @@
-"""1. Develop a model to do iris classification problem using Keras
-Sequential model. Run the model for varying number of epochs
-and batch sizes and observe the accuracy
+"""
+Day 27
+(hint: use pandas groupby)
+1. Import the necessary libraries
+2. Import the dataset(drinks.csv) from common/Python_Exercise folder.
+3. Assign it to a variable called drinks.
+4. Print the continent that drinks more beer on average?
+5. For each continent print the statistics(count,mean,std etc.) for wine consumption.
+6. Print the mean alcohol consumption per continent for every column
+7. Print the median alcoohol consumption per continent for every column
+8. Print the mean, min and max values for spirit consumption.
 """
 
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.optimizers import Adam
-from sklearn.datasets import load_iris
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.model_selection import train_test_split
-iris = load_iris()
-X=iris.data
-y=iris.target.reshape(-1,1)
-print y
-encoder = OneHotEncoder()
-y=encoder.fit_transform(y)
-#print y
-X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2)
-model = Sequential()
-model.add(Dense(4,input_shape=(4,),activation='tanh'))
-model.add(Dense(10,activation='relu'))
-model.add(Dense(3,activation='softmax'))
-optimizer = Adam(lr = 0.001)
-print model.summary()
-model.compile(optimizer,loss='categorical_crossentropy',metrics=['accuracy'])
-model.fit(X_train,y_train,verbose=2,epochs=100)
-results = model.evaluate(X_test,y_test)
-print(results[0]) #loss
-print(results[1]) #accuracy
+import pandas as pd
+from pandas import Series as s
+from pandas import DataFrame as f
+drinks = pd.read_csv('drinks.csv')
+#print drinks
+gp = drinks.groupby('continent')
+
+#4.
+print 'Continent that drinks more beer:\n',gp.mean()['beer_servings'].idxmax() #or gp.mean()['beer_servings'].nlargest(1)
+
+#5
+print gp.describe()
+print gp.agg(['count','mean','std','max','min'])['wine_servings']
+
+#6
+print 'MEan----:','\n',gp.mean()
+#7
+print 'median----:','\n',gp.median() #or gp.agg('median')
+
+#print 'median2-----','\n',gp.agg('median')
+#8
+print gp.agg(['mean','min','max'])['spirit_servings']
