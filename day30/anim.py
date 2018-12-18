@@ -23,10 +23,11 @@ fo=plt.figure(figsize=(6,6))
 so=fo.add_subplot(111)
 x=np.arange(4)
 xlabels='sony mi lg asus'.split()
-sa=np.random.randint(1,90,4)
-bc1=so.bar(x,sa,align='center')
+sa = [10,20,30,40,50]
+bc1=so.bar(x,0,align='center')
 so.set_xticks(x)
 so.set_xticklabels(xlabels)
+so.set_yticks(sa)
 def animbar(i):
  global bc1
  sa=np.random.randint(1,90,4)
