@@ -37,3 +37,21 @@ def animbar(i):
  return bc1
 anm1=anm.FuncAnimation(fo,animbar,interval=3000)
 plt.show()
+"""
+def animbar(i):
+ global bc1
+ sa = open('a1.txt','r').readlines()
+ print list(sa)
+ for line in sa:
+  print line
+ #sa=np.random.randint(1,50,4)
+ #print sa
+ for line in sa:
+  print line
+  for bar1,h1 in zip(bc1,sa):
+   bar1.set_height(h1)
+  return bc1
+anm1=anm.FuncAnimation(fo,animbar,interval=3000)
+plt.show()
+
+"""
